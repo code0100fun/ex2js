@@ -1,0 +1,96 @@
+{
+    "body": [
+        {
+            "declarations": [
+                {
+                    "id": {
+                        "name": "Math",
+                        "type": "Identifier"
+                    },
+                    "init": {
+                        "body": {
+                            "body": [],
+                            "type": "BlockStatement"
+                        },
+                        "defaults": [],
+                        "expression": false,
+                        "generator": false,
+                        "id": null,
+                        "params": [],
+                        "rest": null,
+                        "type": "FunctionExpression"
+                    },
+                    "type": "VariableDeclarator"
+                }
+            ],
+            "kind": "var",
+            "type": "VariableDeclaration"
+        },
+        {
+            "expression": {
+                "left": {
+                    "computed": false,
+                    "object": {
+                        "computed": false,
+                        "object": {
+                            "name": "Math",
+                            "type": "Identifier"
+                        },
+                        "property": {
+                            "name": "prototype",
+                            "type": "Identifier"
+                        },
+                        "type": "MemberExpression"
+                    },
+                    "property": {
+                        "name": "add",
+                        "type": "Identifier"
+                    },
+                    "type": "MemberExpression"
+                },
+                "operator": "=",
+                "right": {
+                    "body": {
+                        "body": [
+                            {
+                                "argument": {
+                                    "left": {
+                                        "name": "a",
+                                        "type": "Identifier"
+                                    },
+                                    "operator": "+",
+                                    "right": {
+                                        "name": "b",
+                                        "type": "Identifier"
+                                    },
+                                    "type": "BinaryExpression"
+                                },
+                                "type": "ReturnStatement"
+                            }
+                        ],
+                        "type": "BlockStatement"
+                    },
+                    "defaults": [],
+                    "expression": false,
+                    "generator": false,
+                    "id": null,
+                    "params": [
+                        {
+                            "name": "a",
+                            "type": "Identifier"
+                        },
+                        {
+                            "name": "b",
+                            "type": "Identifier"
+                        }
+                    ],
+                    "rest": null,
+                    "type": "FunctionExpression"
+                },
+                "type": "AssignmentExpression"
+            },
+            "type": "ExpressionStatement"
+        }
+    ],
+    "type": "Program"
+}

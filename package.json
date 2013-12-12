@@ -1,0 +1,26 @@
+{
+  "name": "ex2js",
+  "version": "0.0.1",
+  "description": "Transpiles Elixir AST into an ECMAscript AST.",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:code0100fun/ex2js.git"
+  },
+  "keywords": [
+    "ECMAScript",
+    "JavaScript",
+    "Node",
+    "AST",
+    "Elixir"
+  ],
+  "author": "Chase McCarthy, Johnny Winn",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/code0100fun/ex2js/issues"
+  },
+  "homepage": "https://github.com/code0100fun/ex2js"
+}

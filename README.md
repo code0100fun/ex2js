@@ -9,13 +9,13 @@ Install the module with: `npm install ex2js`
 var ex2js = require('ex2js');
 
 // optional - look at parsed Elixir AST
-exAstJson = ex2js.parse(exAst);
+var exAstJson = ex2js.parse(exAst);
 
 // optional - look at the Elixir AST translated to a JavaScript AST
-jsAst = ex2js.translate(exAst);
+var jsAst = ex2js.translate(exAst);
 
 // the normal use case is to just import the Elixir AST and compile/eval it
-js = ex2js.compile(exAst);
+var js = ex2js.compile(exAst);
 eval(js);
 ```
 

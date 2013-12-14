@@ -1,0 +1,55 @@
+{
+  :defmodule,
+  [line: 1],
+  [
+    {
+      :__aliases__,
+      [line: 1],
+      [:Math]
+    },
+    [
+      do:
+        {
+          :def,
+          [line: 2],
+          [
+            {
+              :add,
+              [line: 2],
+              [
+                {
+                  :a,
+                  [line: 2],
+                  nil
+                },
+                {
+                  :b,
+                  [line: 2],
+                  nil
+                }
+              ]
+            },
+            [
+              do:
+                {
+                  :+,
+                  [line: 2],
+                  [
+                    {
+                      :a,
+                      [line: 2],
+                      nil
+                    },
+                    {
+                      :b,
+                      [line: 2],
+                      nil
+                    }
+                  ]
+                }
+            ]
+          ]
+        }
+    ]
+  ]
+}

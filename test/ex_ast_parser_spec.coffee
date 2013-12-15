@@ -8,7 +8,6 @@ describe 'ExAstParser', () ->
     @source = fs.readFileSync('./fixtures/math.ex.ast').toString()
 
   describe '#parse(source)', ->
-
     # it 'parses Elixir AST into JavaScript AST', (done) ->
     #   ast = @parser.parse @source
     #   # expect(ex2js.awesome()).to.equal('awesome')
@@ -16,9 +15,8 @@ describe 'ExAstParser', () ->
 
     it 'parses Elixir AST into a JavaScript object', (done) ->
       obj = @parser.astToJson @source
-      # expect(ex2js.awesome()).to.equal('awesome')
+      expect(obj['name']).to.equal('defmodule')
       done()
-
 
   describe '#reset()', ->
     it 'moves character pointer back to beginning and sets current character', ->
@@ -43,24 +41,23 @@ describe 'ExAstParser', () ->
       expect(@parser.ch).to.equal('[')
 
   describe '#function()', ->
-
     it 'extracts a parameter list containing a function', ->
       @parser.text = '[\n { \n :def , \n [ a : 1 ] ,\n [ :b ] \n }, [] \n]'
       @parser.reset()
       parameter = @parser.parameter()
-      expect(parameter[0]['name']).to.equal(':def')
+      expect(parameter[0]['name']).to.equal('def')
       expect(parameter[0]['params'].length).to.equal(2)
       expect(parameter[0]['params'][0]['a']).to.equal(1)
-      expect(parameter[0]['params'][1][0]).to.equal(':b')
+      expect(parameter[0]['params'][1][0]).to.equal('b')
 
     it 'extracts function object with atom paramter', ->
       @parser.text = '{ \n :def , \n [ a : 1 ] ,\n [ :b ] \n },'
       @parser.reset()
       func = @parser.function()
-      expect(func['name']).to.equal(':def')
+      expect(func['name']).to.equal('def')
       expect(func['params'].length).to.equal(2)
       expect(func['params'][0]['a']).to.equal(1)
-      expect(func['params'][1][0]).to.equal(':b')
+      expect(func['params'][1][0]).to.equal('b')
 
     it 'extracts function object with nil paramter', ->
       @parser.text = '{ \n :def , \n [ a : 1 ] ,\n nil \n },'
@@ -72,7 +69,7 @@ describe 'ExAstParser', () ->
       @parser.text = '{ :def, [a:1], [b:2] },'
       @parser.reset()
       func = @parser.function()
-      expect(func['name']).to.equal(':def')
+      expect(func['name']).to.equal('def')
       expect(func['params'].length).to.equal(2)
       expect(func['params'][0]['a']).to.equal(1)
       expect(func['params'][1]['b']).to.equal(2)
@@ -81,23 +78,23 @@ describe 'ExAstParser', () ->
       @parser.text = "{:def,\n [a:1],\n [{\n :b,\n [c:2],\n [d:3]\n}]}"
       @parser.reset()
       func = @parser.function()
-      expect(func['name']).to.equal(':def')
+      expect(func['name']).to.equal('def')
       expect(func['params'].length).to.equal(2)
       expect(func['params'][0]['a']).to.equal(1)
-      expect(func['params'][1][0]['name']).to.equal(':b')
+      expect(func['params'][1][0]['name']).to.equal('b')
 
   describe '#atom()', ->
     it "gathers characters of an atom followed by a ','", ->
       @parser.text = ':def ,\n'
       @parser.reset()
       atom = @parser.atom()
-      expect(atom).to.equal(':def')
+      expect(atom).to.equal('def')
 
     it "gathers characters of an atom followed by a ']'", ->
       @parser.text = ':Math]'
       @parser.reset()
       atom = @parser.atom()
-      expect(atom).to.equal(':Math')
+      expect(atom).to.equal('Math')
 
   describe '#parameterName()', ->
     it 'gathers characters of a parameter', ->
@@ -120,3 +117,4 @@ describe 'ExAstParser', () ->
       @parser.reset()
       number = @parser.number()
       expect(number).to.equal(1)
+

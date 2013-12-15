@@ -2,7 +2,6 @@ class ExAstParser
   ch: ' '
   at: 0
   text: undefined
-  symbol: ''
   parse: (source) ->
 
   reset: ->
@@ -12,102 +11,94 @@ class ExAstParser
   onWhitespace: ->
     /\s/.test(@ch)
 
+  around: ->
+    @text.substring(@at - 10, @at + 10)
+
   next: ->
     @at += 1
     @ch = @text.charAt @at
+
+  nextChar: (ch) ->
+    @white()
+    if ch && ch != @ch
+      # TODO - throw exception
+      console.log("Error: expected '#{ch}' but found '#{@ch}' around '#{@around()}'")
+    @next()
+    @white()
 
   white: ->
     while @onWhitespace()
       @next()
 
-  atom: ->
-    @symbol = ''
-    while(@ch && @ch != ',' && @ch != ']' && !@onWhitespace())
-      @symbol += @ch
+  word: (pattern) ->
+    word = ''
+    while(@ch && pattern.test(@ch))
+      word += @ch
       @next()
-    @symbol
+    word
+
+  atom: ->
+    # TODO - handle non-word characters in atoms ('-', '=',...)
+    atom = @word(/\+|:|\w/)
+    atom.replace ':', ''
 
   nil: ->
-    @symbol = ''
-    while(@ch && @ch != ',' && @ch != ']' && !@onWhitespace())
-      @symbol += @ch
-      @next()
-    null if @symbol == 'nil'
+    @word(/[nil]/)
+    null
 
   number: ->
-    @symbol = ''
-    while(@ch && @ch != ',' && @ch != ']')
-      @symbol += @ch
-      @next()
-    parseInt(@symbol,10)
+    num = @word(/\d/)
+    parseInt(num,10)
 
   parameterName: ->
-    @symbol = ''
-    while(@ch && @ch != ':' && !@onWhitespace())
-      @symbol += @ch
-      @next()
-    @symbol
+    @word(/\w/)
+
+  loopUntil: (ch, block) ->
+    while @ch && @ch != ch
+      block(@value())
+      @white()
+      @next(',') if @ch == ','
+      @white()
+
+  keyValue: ->
+    key = @parameterName()
+    @nextChar(':')
+    value = @value()
+    param = {}
+    param[key] = value
+    param
 
   paramsHash: ->
-    param = {}
-    while @ch && @ch != ']'
-      key = @parameterName()
-      @white()
-      # move past ':'
-      @next()
-      value = @value()
-      param[key] = value
-      @white()
-      @next() if @ch == ','
-      @white()
-    param
+    params = {}
+    @loopUntil ']', (value) =>
+      @merge params, value
+    @white()
+    params
 
   paramsArray: ->
-    param = []
-    while @ch && @ch != ']'
-      value = @value()
-      param.push value
-      @white()
-      @next() if @ch == ','
-      @white()
+    params = []
+    @loopUntil ']', (value) ->
+      params.push value
     @white()
-    param
+    params
 
   parameter: ->
-    # move past '['
-    @next()
-    @white()
-    if @ch == 'n'
-      @nil()
-    else if @ch == '{' || @ch == ':'
+    @nextChar('[')
+    if @ch == '{' || @ch == ':'
       param = @paramsArray()
     else
       param = @paramsHash()
-    # move past ']'
-    @white()
-    @next()
-    @white()
+    @nextChar(']')
     param
 
   function: ->
-    # move past '{'
-    @next()
-    @white()
+    @nextChar('{')
     funcName = @atom()
-    @white()
-    # move past ','
-    @next()
-    @white()
+    @nextChar(',')
     param1 = @value()
-    @white()
-    # move past ','
-    @next()
-    @white()
+    @nextChar(',')
     param2 = @value()
-    @white()
-    # move past '}'
-    @next()
-    @white()
+    @nextChar('}')
     { name: funcName, params: [ param1, param2 ] }
 
   value: ->
@@ -117,14 +108,21 @@ class ExAstParser
       when '[' then @parameter()
       when ':' then @atom()
       when 'n' then @nil()
-      else @number()
+      else
+        if /\d/.test(@ch)
+          @number()
+        else
+          @keyValue()
     value
 
   astToJson: (source) ->
     @text = source
     @reset()
     result = @value()
-    # console.log 'Input: %j', @text
-    # console.log 'Output: %j', result
+
+  merge: (dest, objs...) ->
+    for obj in objs
+      dest[k] = v for k, v of obj
+      dest
 
 module.exports = ExAstParser

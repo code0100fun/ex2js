@@ -2,7 +2,6 @@ class ExAstParser
   ch: ' '
   at: 0
   text: undefined
-  parse: (source) ->
 
   reset: ->
     @at = 0
@@ -115,7 +114,7 @@ class ExAstParser
           @keyValue()
     value
 
-  astToJson: (source) ->
+  parse: (source) ->
     @text = source
     @reset()
     result = @value()

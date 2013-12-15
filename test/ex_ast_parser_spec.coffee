@@ -8,13 +8,8 @@ describe 'ExAstParser', () ->
     @source = fs.readFileSync('./fixtures/math.ex.ast').toString()
 
   describe '#parse(source)', ->
-    # it 'parses Elixir AST into JavaScript AST', (done) ->
-    #   ast = @parser.parse @source
-    #   # expect(ex2js.awesome()).to.equal('awesome')
-    #   done()
-
     it 'parses Elixir AST into a JavaScript object', (done) ->
-      obj = @parser.astToJson @source
+      obj = @parser.parse @source
       expect(obj['name']).to.equal('defmodule')
       done()
 

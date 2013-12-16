@@ -1,5 +1,9 @@
-var Math = function(){}
+var Math = (function () {
 
-Math.prototype.add = function(a, b){
-  return a + b;
-}
+  var math = {};
+  math.add = function(a,b){
+    return a + b;
+  };
+
+  return math;
+}());

@@ -1,4 +1,4 @@
-Parser = require './ex_ast_parser'
+Parser = require './parser'
 
 class Translator
 

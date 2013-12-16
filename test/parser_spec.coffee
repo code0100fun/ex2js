@@ -1,10 +1,10 @@
-ExAstParser = require('../lib/ex_ast_parser')
+Parser = require('../lib/parser')
 expect = require('chai').expect
 fs = require 'fs'
 
-describe 'ExAstParser', () ->
+describe 'Parser', () ->
   beforeEach ->
-    @parser = new ExAstParser()
+    @parser = new Parser()
     @source = fs.readFileSync('./fixtures/math.ex.ast').toString()
 
   describe '#parse(source)', ->

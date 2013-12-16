@@ -5,7 +5,7 @@ An Elixir AST to ECMAScript transpiler.
 ## Getting Started
 Install the module with: `npm install ex2js`
 
-```javascript
+```
 var ex2js = require('ex2js');
 
 // optional - look at parsed Elixir AST
@@ -17,6 +17,13 @@ var jsAst = ex2js.translate(exAst);
 // the normal use case is to just import the Elixir AST and compile/eval it
 var js = ex2js.compile(exAst);
 eval(js);
+```
+
+## Debugging
+```
+$ node debug $(which grunt)
+debug > c
+debug > repl
 ```
 
 ## Documentation

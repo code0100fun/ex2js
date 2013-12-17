@@ -1,4 +1,4 @@
-class ExAstParser
+class Parser
   ch: ' '
   at: 0
   text: undefined
@@ -124,4 +124,4 @@ class ExAstParser
       dest[k] = v for k, v of obj
       dest
 
-module.exports = ExAstParser
+module.exports = Parser

@@ -14,7 +14,7 @@ describe 'JsAstInspector', () ->
 
   describe '#func(name)', ->
     it 'finds a function by name', ->
-      path = @inspector.func('math')
+      path = @inspector.func('add')
       expect(path.params[0].name).to.equal('a')
       expect(path.params[1].name).to.equal('b')
 

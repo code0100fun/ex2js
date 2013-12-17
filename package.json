@@ -37,6 +37,7 @@
     "grunt-shell": "~0.6.1"
   },
   "dependencies": {
-    "JSONPath": "~0.9.1"
+    "JSONPath": "~0.9.1",
+    "escodegen": "~1.0.1"
   }
 }

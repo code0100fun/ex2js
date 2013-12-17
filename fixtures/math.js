@@ -1,9 +1,8 @@
-var Math = (function () {
+var Math = (function (exports) {
 
-  var math = {};
-  math.add = function(a,b){
+  exports.add = function(a,b){
     return a + b;
   };
 
-  return math;
-}());
+  return exports;
+}(Math || {}));

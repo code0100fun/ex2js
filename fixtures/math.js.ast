@@ -15,28 +15,16 @@
                         "callee": {
                             "type": "FunctionExpression",
                             "id": null,
-                            "params": [],
+                            "params": [
+                                {
+                                    "type": "Identifier",
+                                    "name": "exports"
+                                }
+                            ],
                             "defaults": [],
                             "body": {
                                 "type": "BlockStatement",
                                 "body": [
-                                    {
-                                        "type": "VariableDeclaration",
-                                        "declarations": [
-                                            {
-                                                "type": "VariableDeclarator",
-                                                "id": {
-                                                    "type": "Identifier",
-                                                    "name": "math"
-                                                },
-                                                "init": {
-                                                    "type": "ObjectExpression",
-                                                    "properties": []
-                                                }
-                                            }
-                                        ],
-                                        "kind": "var"
-                                    },
                                     {
                                         "type": "ExpressionStatement",
                                         "expression": {
@@ -47,7 +35,7 @@
                                                 "computed": false,
                                                 "object": {
                                                     "type": "Identifier",
-                                                    "name": "math"
+                                                    "name": "exports"
                                                 },
                                                 "property": {
                                                     "type": "Identifier",
@@ -98,7 +86,7 @@
                                         "type": "ReturnStatement",
                                         "argument": {
                                             "type": "Identifier",
-                                            "name": "math"
+                                            "name": "exports"
                                         }
                                     }
                                 ]
@@ -107,7 +95,20 @@
                             "generator": false,
                             "expression": false
                         },
-                        "arguments": []
+                        "arguments": [
+                            {
+                                "type": "LogicalExpression",
+                                "operator": "||",
+                                "left": {
+                                    "type": "Identifier",
+                                    "name": "Math"
+                                },
+                                "right": {
+                                    "type": "ObjectExpression",
+                                    "properties": []
+                                }
+                            }
+                        ]
                     }
                 }
             ],

@@ -1,5 +1,21 @@
+Ex2js = {}
+Ex2js.Function = require('../lib/function')
+
 class Module
   constructor: (@name) ->
+  methods: []
+  exports: 'exports'
+  returnAst: ->
+    {
+      type: 'ReturnStatement'
+      argument:
+        type: 'Identifier'
+        name: @exports
+    }
+  functionAst: ->
+    func = new Ex2js.Function([@exports])
+    func.body.push @returnAst()
+    func.ast()
 
   ast: ->
     type: 'VariableDeclaration'
@@ -11,28 +27,7 @@ class Module
         name: @name
       init:
         type: 'CallExpression'
-        callee:
-          type: 'FunctionExpression'
-          id: null
-          params: [
-            type: 'Identifier'
-            name: 'exports'
-          ]
-          defaults: []
-          body:
-            type: 'BlockStatement'
-            rest: null
-            generator: false
-            expression: false
-            body: [
-              # Module functions and variables go here
-              {
-                type: 'ReturnStatement'
-                argument:
-                  type: 'Identifier'
-                  name: 'exports'
-              }
-            ]
+        callee: @functionAst()
         arguments: [
           type: 'LogicalExpression'
           operator: '||'

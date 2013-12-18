@@ -19,7 +19,6 @@ describe 'Translator', () ->
       jsAst = @translator.translate @source
       inspector = new JsAstInspector(jsAst)
       path = inspector.var('Math')
-      debugger
       expect(path.id.name).to.equal('Math')
 
     # it 'it converts defmodule to JavaScript module pattern', (done) ->

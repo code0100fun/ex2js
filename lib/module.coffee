@@ -1,6 +1,6 @@
 Ex2js = {}
 Ex2js.Function = require('./function')
-Return = require('./return')
+ReturnStatement = require('./return_statement')
 
 class Module
   constructor: (@name) ->
@@ -11,7 +11,7 @@ class Module
     func = new Ex2js.Function([@exports])
     for method in @methods
       func.body.push method
-    func.body.push(new Return(@exports))
+    func.body.push(new ReturnStatement(@exports))
     func.ast()
   ast: ->
     type: 'VariableDeclaration'

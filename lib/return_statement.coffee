@@ -1,12 +1,13 @@
-class Return
+class ReturnStatement
   constructor: (@argument) ->
+  type: 'ReturnStatement'
   argumentAst: ->
     if @argument.ast
       @argument.ast()
     else
       { type: 'Identifier', name: @argument }
   ast: ->
-    type: 'ReturnStatement'
+    type: @type
     argument: @argumentAst()
 
-module.exports = Return
+module.exports = ReturnStatement

@@ -1,9 +1,16 @@
+ReturnStatement = require './return_statement'
+
 class Function
   constructor: (@params) ->
     @body = []
   body: undefined
   bodyAst: ->
-    @body.map (statement) -> statement.ast()
+    statmentsAst = []
+    for statement, i in @body
+      if i == (@body.length - 1) && statement.type != 'ReturnStatement'
+        statement = new ReturnStatement(statement.expression)
+      statmentsAst.push statement.ast()
+    statmentsAst
   paramsAst: ->
     @params.map (param) ->
       type: 'Identifier'

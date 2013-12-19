@@ -1,5 +1,4 @@
-Ex2js = {}
-Ex2js.Function = require('./function')
+FunctionExpression = require('./function_expression')
 ReturnStatement = require('./return_statement')
 
 class Module
@@ -8,7 +7,7 @@ class Module
   methods: undefined
   exports: 'exports'
   functionAst: ->
-    func = new Ex2js.Function([@exports])
+    func = new FunctionExpression([@exports])
     for method in @methods
       func.body.push method
     func.body.push(new ReturnStatement(@exports))

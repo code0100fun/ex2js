@@ -1,12 +1,11 @@
-Ex2js = {}
-Ex2js.Function = require('../lib/function')
+FunctionExpression = require('../lib/function_expression')
 
 class Method
   constructor: (@name, @params=[], @exports='exports') ->
     @body = []
   body: undefined
   functionAst: ->
-    func = new Ex2js.Function(@params)
+    func = new FunctionExpression(@params)
     func.body = @body
     func.ast()
   ast: ->

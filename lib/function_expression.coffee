@@ -1,6 +1,6 @@
 ReturnStatement = require './return_statement'
 
-class Function
+class FunctionExpression
   constructor: (@params) ->
     @body = []
   body: undefined
@@ -27,4 +27,4 @@ class Function
       expression: false
       body: @bodyAst()
 
-module.exports = Function
+module.exports = FunctionExpression

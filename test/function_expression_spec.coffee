@@ -1,14 +1,14 @@
 JsAstInspector = require('../lib/js_ast_inspector')
-Function = require('../lib/function')
+FunctionExpression = require('../lib/function_expression')
 ExpressionStatement = require('../lib/expression_statement')
 BinaryExpression = require('../lib/binary_expression')
 escodegen = require('escodegen')
 expect = require('chai').expect
 fs = require 'fs'
 
-describe 'Function', () ->
+describe 'FunctionExpression', () ->
   beforeEach ->
-    @func = new Function(['a', 'b'])
+    @func = new FunctionExpression(['a', 'b'])
     @func.body.push new ExpressionStatement(new BinaryExpression('+', 'a', 'b'))
     @ast = @func.ast()
 

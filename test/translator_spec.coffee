@@ -4,6 +4,31 @@ expect = require('chai').expect
 fs = require 'fs'
 
 describe 'Translator', () ->
+
+  moduleAst = { name: 'defmodule', params:[
+      {},
+      [
+        { name: '__aliases__', params: [{},['Foo']] },
+        { do: {} }
+      ]
+  ] }
+
+  methodAst = { name: 'def', params:[
+      {},
+      [
+        { name: 'bar', params: [{},[
+          { name: 'a', params: [] },
+          { name: 'b', params: [] },
+        ]] },
+        { do: {} }
+      ]
+  ] }
+
+  addAst = { name: '+', params: [ {}, [
+    { name: 'a', params:[{},null] },
+    { name: 'b', params:[{},null] }
+  ]]}
+
   beforeEach ->
     @source = fs.readFileSync('./fixtures/math.ex.ast').toString()
     @translator = new Translator()
@@ -21,22 +46,33 @@ describe 'Translator', () ->
       path = inspector.var('Math')
       expect(path.id.name).to.equal('Math')
 
-    # it 'it converts defmodule to JavaScript module pattern', (done) ->
-    #   jsAst = @translator.translate @source
-    #   expect(jsAst.variables).to.include('Math')
-    #   expect(jsAst['body'][0]['declarations'][0]['id']['name']).to.be.a('Math')
-    #   done()
   describe '#statement(exAst)', ->
     it 'creates a module object when given an Elixir AST for a module', ->
-      exAst = { name: 'defmodule', params:[
-          {},
-          [
-            { name: '__aliases__', params: [{},['Foo']] },
-            { do: {} }
-          ]
-      ] }
-      module = @translator.statement exAst
+      module = @translator.statement moduleAst
       expect(module.name).to.equal('Foo')
+
+  describe '#method(exAst)', ->
+    it 'constructs a method given the ast for a method', ->
+      method = @translator.method methodAst
+      expect(method.name).to.equal('bar')
+
+
+  describe '#module(exAst)', ->
+    it 'constructs a module given the ast for a module', ->
+      module = @translator.module moduleAst
+      expect(module.name).to.equal('Foo')
+
+  describe '#add(exAst)', ->
+    it 'constructs an addition expression statement given the ast for an addition', ->
+      add = @translator.add addAst
+      expect(add.expression.operator).to.equal('+')
+      expect(add.expression.a).to.equal('a')
+      expect(add.expression.b).to.equal('b')
+
+  # describe '#function(params)', ->
+  #   it 'constructs a module given the ast for a module', ->
+  #     func = @translator.function functionAst
+  #     expect(func.params).to.eql(['a','b'])
 
   describe '#parse(source)', ->
     it 'parses Elixir AST into a JavaScript object', ->

@@ -1,22 +1,18 @@
 Ex2js = {}
-Ex2js.Function = require('../lib/function')
+Ex2js.Function = require('./function')
+Return = require('./return')
 
 class Module
   constructor: (@name) ->
-  methods: []
+    @methods = []
+  methods: undefined
   exports: 'exports'
-  returnAst: ->
-    {
-      type: 'ReturnStatement'
-      argument:
-        type: 'Identifier'
-        name: @exports
-    }
   functionAst: ->
     func = new Ex2js.Function([@exports])
-    func.body.push @returnAst()
+    for method in @methods
+      func.body.push method
+    func.body.push(new Return(@exports))
     func.ast()
-
   ast: ->
     type: 'VariableDeclaration'
     kind: 'var'

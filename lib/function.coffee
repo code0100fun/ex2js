@@ -1,8 +1,9 @@
 class Function
   constructor: (@params) ->
-  body: []
+    @body = []
+  body: undefined
   bodyAst: ->
-    @body
+    @body.map (statement) -> statement.ast()
   paramsAst: ->
     @params.map (param) ->
       type: 'Identifier'

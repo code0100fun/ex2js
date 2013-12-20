@@ -19,7 +19,16 @@ var js = ex2js.compile(exAst);
 eval(js);
 ```
 
+## Testing
+Test a single step
+
+```
+$ mocha --reporter=spec --compilers="coffee:coffee-script" --grep=do test/parser_spec.coffee
+```
+
 ## Debugging
+Add a `debugger` statement where you want to break
+
 ```
 $ node debug $(which grunt)
 debug > c

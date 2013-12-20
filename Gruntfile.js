@@ -11,6 +11,7 @@ module.exports = function (grunt) {
       test: {
         src: ['test/**/*.coffee'],
         options: {
+          reporter : 'spec',
           compilers: 'coffee:coffee-script'
         }
       }

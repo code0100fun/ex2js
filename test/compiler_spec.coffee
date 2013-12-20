@@ -17,9 +17,5 @@ describe 'Compiler', () ->
       js = @compiler.compile(@source)
       write js
       expect(js).to.contain('var Math = function')
-
-    it 'compiles Elixir module method AST into a JavaScript module method', ->
-      js = @compiler.compile(@source)
-      write js
       expect(js).to.contain('exports.add = function (a, b)')
 

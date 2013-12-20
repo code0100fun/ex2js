@@ -106,6 +106,12 @@ describe 'Parser', () ->
       expect(Object.keys(parameter)[0]).to.equal('line')
       expect(parameter['line']).to.equal(1)
 
+    it 'extracts a do block parameter', ->
+      @parser.text = '[do: {:__block__, [], [{:def, [], [] ] ],'
+      @parser.reset()
+      parameter = @parser.parameter()
+      debugger
+
   describe '#number()', ->
     it 'extracts a number', ->
       @parser.text = '1],'

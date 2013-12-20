@@ -33,15 +33,18 @@ class Translator
 
   function: (exAst) ->
 
-  add: (exAst) ->
-    expression = new BinaryExpression('+', 'a', 'b')
+  binaryExpression: (exAst) ->
+    operator = exAst.name
+    a = exAst.params[1][0].name
+    b = exAst.params[1][1].name
+    expression = new BinaryExpression(operator, a, b)
     new ExpressionStatement(expression)
 
   statement: (exAst) ->
     switch exAst.name
       when 'defmodule' then @module(exAst)
       when 'def' then @method(exAst)
-      when '+' then @add(exAst)
+      when '+' then @binaryExpression(exAst)
 
   expression: (exAst) ->
 

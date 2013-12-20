@@ -1,0 +1,14 @@
+#! /usr/bin/env node
+
+input = process.argv[2];
+output = process.argv[3];
+
+console.log(input, " >> ", output)
+require("coffee-script")
+fs = require('fs');
+Compiler = require('../lib/compiler');
+
+exAst = fs.readFileSync(input, 'utf-8');
+console.log(exAst);
+js = (new Compiler()).compile(exAst);
+fs.writeFileSync(output, js);

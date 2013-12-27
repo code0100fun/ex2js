@@ -38,7 +38,7 @@ class Parser
 
   atom: ->
     # TODO - handle non-word characters in atoms ('-', '=',...)
-    atom = @word(/\+|:|\w/)
+    atom = @word(/\+|\*|=|:|\w/)
     atom.replace ':', ''
 
   nil: ->
@@ -98,7 +98,13 @@ class Parser
     @nextChar(',')
     param2 = @value()
     @nextChar('}')
-    { name: funcName, params: [ param1, param2 ] }
+    @extractFuncType { name: funcName, params: [ param1, param2 ] }
+
+  extractFuncType: (func) ->
+    if /^__.*__$/.test func.name
+      type = func.name.match(/^__(.*)__/)[1]
+      func[type] = func.params[1]
+    func
 
   value: ->
     @white()

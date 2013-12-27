@@ -39,6 +39,7 @@
   },
   "dependencies": {
     "JSONPath": "~0.9.1",
-    "escodegen": "~1.0.1"
+    "escodegen": "~1.0.1",
+    "commander": "~2.1.0"
   }
 }

@@ -1,14 +1,41 @@
-#! /usr/bin/env node
+#! /usr/bin/env coffee
 
-input = process.argv[2];
-output = process.argv[3];
-
-console.log(input, " >> ", output)
 require("coffee-script")
-fs = require('fs');
-Compiler = require('../lib/compiler');
+cli = require('commander')
+pack = require('../package.json')
+fs = require('fs')
 
-exAst = fs.readFileSync(input, 'utf-8');
-console.log(exAst);
-js = (new Compiler()).compile(exAst);
-fs.writeFileSync(output, js);
+cli
+  .version(pack.version)
+  .option('-i, --input <file>', 'The input Elixir AST file')
+  .option('-c, --compile [file]', 'Compile input AST and optionally save to [file]')
+  .option('-t, --translate [file]', 'Translate input AST and optionally save to [file]')
+  .option('-p, --parsed [file]', 'Parse input AST and optionally save to [file]')
+  .parse(process.argv)
+
+if cli.input
+  console.log('input:', cli.input)
+  exAst = fs.readFileSync(cli.input, 'utf-8')
+  # console.log(exAst)
+
+if cli.parsed
+  console.log('parse:', cli.parsed)
+  Parser = require('../lib/parser')
+  json = (new Parser()).parse(exAst)
+  console.log('%j', json)
+  fs.writeFileSync(cli.parsed, json) if typeof(cli.parsed) == 'string'
+
+if cli.translate
+  console.log('translate:', cli.translate)
+  Translator = require('../lib/translator')
+  jsAst = (new Translator()).translate(exAst)
+  console.log('%j', jsAst)
+  fs.writeFileSync(cli.translate, jsAst) if typeof(cli.translate) == 'string'
+
+if cli.compile
+  console.log('compile:', cli.compile)
+  Compiler = require('../lib/compiler')
+  js = (new Compiler()).compile(exAst)
+  console.log('%j', js)
+  fs.writeFileSync(cli.compile, js) if typeof(cli.compile) == 'string'
+

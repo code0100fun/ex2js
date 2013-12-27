@@ -5,32 +5,23 @@ fs = require 'fs'
 
 describe 'Translator', () ->
 
-  moduleAst = { name: 'defmodule', params:[
-      {},
-      [
-        { name: '__aliases__', params: [{},['Foo']] },
-        { do: {} }
-      ]
-  ] }
+  doBlock = { do: {} }
+  fn = (name, params) ->
+    params = [{}, params] if params?
+    { name: name, params: params }
 
-  methodAst = { name: 'def', params:[
-      {},
-      [
-        { name: 'bar', params: [{},[
-          { name: 'a', params: [] },
-          { name: 'b', params: [] },
-        ]] },
-        { do: {} }
-      ]
-  ] }
+  moduleAst = fn 'defmodule', [
+    fn '__aliases__', ['Foo']
+    doBlock
+  ]
 
-  addAst = { name: '+', params: [ {}, [
-    { name: 'a', params:[{},null] },
-    { name: 'b', params:[{},null] }
-  ]]}
+  methodAst = fn 'def', [fn('bar', [fn 'a', fn 'b']), doBlock]
+
+  addAst = fn '+', [fn('a'), fn('b')]
 
   beforeEach ->
     @source = fs.readFileSync('./fixtures/math.ex.ast').toString()
+    @complexSource = fs.readFileSync('./fixtures/math2.ex.ast').toString()
     @translator = new Translator()
 
   describe '#translate(source)', ->

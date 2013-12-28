@@ -1,14 +1,14 @@
 class BinaryExpression
-  constructor: (@operator, @a, @b) ->
+  constructor: (@operator, @left, @right) ->
   # TODO - handle expressions in left and right
   ast: ->
     type: 'BinaryExpression'
     operator: @operator
     left:
       type: 'Identifier'
-      name: @a
+      name: @left
     right:
       type: 'Identifier'
-      name: @b
+      name: @right
 
 module.exports = BinaryExpression

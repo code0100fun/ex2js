@@ -23,14 +23,14 @@ if cli.parsed
   Parser = require('../lib/parser')
   json = (new Parser()).parse(exAst)
   console.log('%j', json)
-  fs.writeFileSync(cli.parsed, json) if typeof(cli.parsed) == 'string'
+  fs.writeFileSync(cli.parsed, JSON.stringify(json)) if typeof(cli.parsed) == 'string'
 
 if cli.translate
   console.log('translate:', cli.translate)
   Translator = require('../lib/translator')
   jsAst = (new Translator()).translate(exAst)
   console.log('%j', jsAst)
-  fs.writeFileSync(cli.translate, jsAst) if typeof(cli.translate) == 'string'
+  fs.writeFileSync(cli.translate, JSON.stringify(jsAst)) if typeof(cli.translate) == 'string'
 
 if cli.compile
   console.log('compile:', cli.compile)

@@ -8,32 +8,51 @@ ex2js = require('../lib/ex2js')
 
 cli
   .version(pack.version)
+  .option('-e, --elixir <file>', 'The input Elixir file')
   .option('-i, --input <file>', 'The input Elixir AST file')
   .option('-c, --compile [file]', 'Compile input AST and optionally save to [file]')
   .option('-t, --translate [file]', 'Translate input AST and optionally save to [file]')
   .option('-p, --parsed [file]', 'Parse input AST and optionally save to [file]')
   .parse(process.argv)
 
-if cli.input
-  console.log('input:', cli.input)
-  exAst = fs.readFileSync(cli.input, 'utf-8')
-  # console.log(exAst)
 
-if cli.parsed
-  console.log('parse:', cli.parsed)
-  json = ex2js.parse exAst
-  console.log('%j', json)
-  fs.writeFileSync(cli.parsed, JSON.stringify(json)) if typeof(cli.parsed) == 'string'
+input = ->
+  if cli.input
+    console.log('input:', cli.input)
+    exAst = fs.readFileSync(cli.input, 'utf-8')
+    parsed(exAst)
+    translate(exAst)
+    compile(exAst)
 
-if cli.translate
-  console.log('translate:', cli.translate)
-  jsAst = ex2js.translate exAst
-  console.log('%j', jsAst)
-  fs.writeFileSync(cli.translate, JSON.stringify(jsAst)) if typeof(cli.translate) == 'string'
+elixir = ->
+  if cli.elixir
+    console.log 'elixir:', cli.elixir
+    ex2js.quote cli.elixir, (exAst) ->
+      console.log exAst
+      parsed(exAst)
+      translate(exAst)
+      compile(exAst)
 
-if cli.compile
-  console.log('compile:', cli.compile)
-  js = ex2js.compile exAst
-  console.log('%j', js)
-  fs.writeFileSync(cli.compile, js) if typeof(cli.compile) == 'string'
+parsed = (exAst) ->
+  if cli.parsed
+    console.log('parse:', cli.parsed)
+    json = ex2js.parse exAst
+    console.log('%j', json)
+    fs.writeFileSync(cli.parsed, JSON.stringify(json)) if typeof(cli.parsed) == 'string'
 
+translate = (exAst) ->
+  if cli.translate
+    console.log('translate:', cli.translate)
+    jsAst = ex2js.translate exAst
+    console.log('%j', jsAst)
+    fs.writeFileSync(cli.translate, JSON.stringify(jsAst)) if typeof(cli.translate) == 'string'
+
+compile = (exAst) ->
+  if cli.compile
+    console.log('compile:', cli.compile)
+    js = ex2js.compile exAst
+    console.log('%j', js)
+    fs.writeFileSync(cli.compile, js) if typeof(cli.compile) == 'string'
+
+elixir()
+input()

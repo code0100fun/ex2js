@@ -4,6 +4,7 @@ require("coffee-script")
 cli = require('commander')
 pack = require('../package.json')
 fs = require('fs')
+ex2js = require('../lib/ex2js')
 
 cli
   .version(pack.version)
@@ -20,22 +21,19 @@ if cli.input
 
 if cli.parsed
   console.log('parse:', cli.parsed)
-  Parser = require('../lib/parser')
-  json = (new Parser()).parse(exAst)
+  json = ex2js.parse exAst
   console.log('%j', json)
   fs.writeFileSync(cli.parsed, JSON.stringify(json)) if typeof(cli.parsed) == 'string'
 
 if cli.translate
   console.log('translate:', cli.translate)
-  Translator = require('../lib/translator')
-  jsAst = (new Translator()).translate(exAst)
+  jsAst = ex2js.translate exAst
   console.log('%j', jsAst)
   fs.writeFileSync(cli.translate, JSON.stringify(jsAst)) if typeof(cli.translate) == 'string'
 
 if cli.compile
   console.log('compile:', cli.compile)
-  Compiler = require('../lib/compiler')
-  js = (new Compiler()).compile(exAst)
+  js = ex2js.compile exAst
   console.log('%j', js)
   fs.writeFileSync(cli.compile, js) if typeof(cli.compile) == 'string'
 

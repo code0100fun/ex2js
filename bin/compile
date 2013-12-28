@@ -51,7 +51,7 @@ compile = (exAst) ->
   if cli.compile
     console.log('compile:', cli.compile)
     js = ex2js.compile exAst
-    console.log('%j', js)
+    console.log(js)
     fs.writeFileSync(cli.compile, js) if typeof(cli.compile) == 'string'
 
 elixir()

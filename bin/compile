@@ -37,15 +37,17 @@ parsed = (exAst) ->
   if cli.parsed
     console.log('parse:', cli.parsed)
     json = ex2js.parse exAst
-    console.log('%j', json)
-    fs.writeFileSync(cli.parsed, JSON.stringify(json)) if typeof(cli.parsed) == 'string'
+    jsonFmt = JSON.stringify(json, null, 2)
+    console.log(jsonFmt)
+    fs.writeFileSync(cli.parsed, jsonFmt) if typeof(cli.parsed) == 'string'
 
 translate = (exAst) ->
   if cli.translate
     console.log('translate:', cli.translate)
     jsAst = ex2js.translate exAst
-    console.log('%j', jsAst)
-    fs.writeFileSync(cli.translate, JSON.stringify(jsAst)) if typeof(cli.translate) == 'string'
+    jsAstFmt = JSON.stringify(jsAst, null, 2)
+    console.log(jsAstFmt)
+    fs.writeFileSync(cli.translate, jsAstFmt) if typeof(cli.translate) == 'string'
 
 compile = (exAst) ->
   if cli.compile

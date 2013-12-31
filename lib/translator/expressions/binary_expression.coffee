@@ -1,8 +1,11 @@
-class BinaryExpression
+Expression = require './expression.coffee'
+
+class BinaryExpression extends Expression
   constructor: (@operator, @left, @right) ->
+  type: 'BinaryExpression'
   # TODO - handle expressions in left and right
   ast: ->
-    type: 'BinaryExpression'
+    type: @type
     operator: @operator
     left:
       type: 'Identifier'

@@ -1,4 +1,4 @@
-JsAstInspector = require('../lib/js_ast_inspector')
+JsAstInspector = require('./js_ast_inspector')
 expect = require('chai').expect
 fs = require 'fs'
 

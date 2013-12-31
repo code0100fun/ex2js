@@ -4,9 +4,9 @@ fs = require('fs')
 exec = require('child_process').exec
 path = require('path')
 pack = require('../package.json')
-Parser = require('./parser')
-Translator = require('./translator')
-Compiler = require('./compiler')
+Parser = require('./parser/parser')
+Translator = require('./translator/translator')
+Compiler = require('./compiler/compiler')
 
 class Ex2js
   quote: (file, callback) ->

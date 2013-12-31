@@ -1,4 +1,4 @@
-Compiler = require('../lib/compiler')
+Compiler = require('../lib/compiler/compiler')
 expect = require('chai').expect
 fs = require 'fs'
 

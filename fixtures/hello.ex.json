@@ -1,0 +1,80 @@
+{
+  "name": "defmodule",
+  "params": [
+    {
+      "line": 1
+    },
+    [
+      {
+        "name": "__aliases__",
+        "params": [
+          {
+            "line": 1
+          },
+          [
+            "ModuleName"
+          ]
+        ],
+        "aliases": [
+          "ModuleName"
+        ]
+      },
+      {
+        "do": {
+          "name": "def",
+          "params": [
+            {
+              "line": 2
+            },
+            [
+              {
+                "name": "hello",
+                "params": [
+                  {
+                    "line": 2
+                  },
+                  null
+                ]
+              },
+              {
+                "do": {
+                  "name": {
+                    "name": ".",
+                    "params": [
+                      {
+                        "line": 3
+                      },
+                      [
+                        {
+                          "name": "__aliases__",
+                          "params": [
+                            {
+                              "line": 3
+                            },
+                            [
+                              "IO"
+                            ]
+                          ],
+                          "aliases": [
+                            "IO"
+                          ]
+                        },
+                        "puts"
+                      ]
+                    ]
+                  },
+                  "params": [
+                    {
+                      "line": 3
+                    },
+                    {}
+                  ]
+                }
+              }
+            ]
+          ]
+        }
+      }
+    ]
+  ]
+}

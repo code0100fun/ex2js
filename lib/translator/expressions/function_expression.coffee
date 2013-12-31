@@ -1,6 +1,7 @@
-ReturnStatement = require './return_statement'
+ReturnStatement = require '../statements/return_statement'
+Expression = require './expression'
 
-class FunctionExpression
+class FunctionExpression extends Expression
   constructor: (@params) ->
     @body = []
   body: undefined

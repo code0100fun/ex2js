@@ -1,7 +1,7 @@
-JsAstInspector = require('../lib/js_ast_inspector')
-FunctionExpression = require('../lib/function_expression')
-ExpressionStatement = require('../lib/expression_statement')
-BinaryExpression = require('../lib/binary_expression')
+JsAstInspector = require('./js_ast_inspector')
+FunctionExpression = require('../lib/translator/expressions/function_expression')
+ExpressionStatement = require('../lib/translator/statements/expression_statement')
+BinaryExpression = require('../lib/translator/expressions/binary_expression')
 escodegen = require('escodegen')
 expect = require('chai').expect
 fs = require 'fs'

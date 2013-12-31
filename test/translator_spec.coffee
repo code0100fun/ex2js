@@ -1,5 +1,5 @@
-Translator = require('../lib/translator')
-JsAstInspector = require('../lib/js_ast_inspector')
+Translator = require('../lib/translator/translator')
+JsAstInspector = require('./js_ast_inspector')
 expect = require('chai').expect
 fs = require 'fs'
 
@@ -26,6 +26,12 @@ describe 'Translator', () ->
 
   assignAst = fn('=', fn('ret'), fn('+', fn('a'), fn('b')))
 
+  callAst = fn('puts', '"Hello World"')
+
+  memberAst = fn('.', 'person', 'name')
+
+  memberAssignAst = fn('=', fn('.', 'person', 'name'), '"Bob"')
+
   defAddBlockAst = def('add', ['a','b'],[
       fn '=', fn('ret'), addAst
       fn('ret')
@@ -49,11 +55,11 @@ describe 'Translator', () ->
       path = inspector.var('Math')
       expect(path.id.name).to.equal('Math')
 
-    # it 'transplates a complex Elixir AST into JavaScript AST', ->
-    #   jsAst = @translator.translate @complexSource
-    #   inspector = new JsAstInspector(jsAst)
-    #   path = inspector.var('Math')
-    #   expect(path.id.name).to.equal('Math')
+    it 'transplates a complex Elixir AST into JavaScript AST', ->
+      jsAst = @translator.translate @complexSource
+      inspector = new JsAstInspector(jsAst)
+      path = inspector.var('Math2')
+      expect(path.id.name).to.equal('Math2')
 
   describe '#statement(exAst)', ->
     it 'creates a module object when given an Elixir AST for a module', ->
@@ -72,6 +78,31 @@ describe 'Translator', () ->
       expect(assign.expression.left).to.equal('ret')
       expect(assign.expression.right).to.exist
       expect(assign.expression.right.operator).to.equal('+')
+
+    it 'constructs a string literal', ->
+      call = @translator.statement(callAst)
+      expect(call.expression.args[0].value).to.equal('Hello World')
+      expect(call.expression.args[0].raw).to.equal('"Hello World"')
+      expect(call.ast().expression.arguments[0].value).to.equal('Hello World')
+      expect(call.ast().expression.arguments[0].raw).to.equal('"Hello World"')
+
+    it 'constructs a call expression statemnt given the AST for a call expression', ->
+      call = @translator.statement(callAst).ast()
+      expect(call.expression.type).to.equal('CallExpression')
+      expect(call.expression.callee.name).to.equal('puts')
+      expect(call.expression.arguments[0].value).to.equal('Hello World')
+
+    it 'constructs a member expression statemnt given the AST for a member expression', ->
+      member = @translator.statement(memberAst).ast()
+      exp = member.expression
+      expect(exp.type).to.equal('MemberExpression')
+      expect(exp.object.name).to.equal('person')
+
+    # it 'constructs an assignment to a member expression', ->
+    #   member = @translator.statement(memberAssignAst).ast()
+    #   exp = member.expression
+    #   expect(exp.type).to.equal('AssignmentExpression')
+    #   expect(exp.object.name).to.equal('person')
 
   describe '#method(exAst)', ->
     it 'constructs a method given the AST for a method', ->

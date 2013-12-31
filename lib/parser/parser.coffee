@@ -20,8 +20,8 @@ class Parser
   nextChar: (ch) ->
     @white()
     if ch && ch != @ch
-      # TODO - throw exception
-      console.log("Error: expected '#{ch}' but found '#{@ch}' around '#{@around()}'")
+      message = "Error: expected '#{ch}' but found '#{@ch}' around '#{@around()}'"
+      throw message
     @next()
     @white()
 
@@ -38,8 +38,16 @@ class Parser
 
   atom: ->
     # TODO - handle non-word characters in atoms ('-', '=',...)
-    atom = @word(/\+|\*|=|:|\w/)
+    atom = @word(/\+|\*|\.|=|:|\w/)
     atom.replace ':', ''
+
+  string: ->
+    # TODO - handle escaped quotes
+    string = @ch
+    @next('"')
+    string = @word(/[^"]/)
+    @next('"')
+    "\"#{string}\""
 
   nil: ->
     @word(/[nil]/)
@@ -83,7 +91,7 @@ class Parser
 
   parameter: ->
     @nextChar('[')
-    if @ch == '{' || @ch == ':'
+    if @ch == '{' || @ch == ':' || @ch == '"' || @ch == ']'
       param = @paramsArray()
     else
       param = @paramsHash()
@@ -92,7 +100,7 @@ class Parser
 
   function: ->
     @nextChar('{')
-    funcName = @atom()
+    funcName = @value()
     @nextChar(',')
     param1 = @value()
     @nextChar(',')
@@ -113,6 +121,7 @@ class Parser
       when '[' then @parameter()
       when ':' then @atom()
       when 'n' then @nil()
+      when '"' then @string()
       else
         if /\d/.test(@ch)
           @number()

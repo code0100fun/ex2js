@@ -1,5 +1,5 @@
-JsAstInspector = require('../lib/js_ast_inspector')
-Method = require('../lib/method')
+JsAstInspector = require('./js_ast_inspector')
+Method = require('../lib/translator/patterns/method')
 escodegen = require('escodegen')
 expect = require('chai').expect
 fs = require 'fs'

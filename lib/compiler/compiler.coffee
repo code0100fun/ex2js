@@ -1,4 +1,4 @@
-Translator = require './translator'
+Translator = require '../translator/translator'
 escodegen = require('escodegen')
 
 class Compiler

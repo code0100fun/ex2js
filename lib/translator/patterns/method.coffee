@@ -1,4 +1,4 @@
-FunctionExpression = require('../lib/function_expression')
+FunctionExpression = require('../expressions/function_expression')
 
 class Method
   constructor: (@name, @params=[], @exports='exports') ->

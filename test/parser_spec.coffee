@@ -1,4 +1,4 @@
-Parser = require('../lib/parser')
+Parser = require('../lib/parser/parser')
 expect = require('chai').expect
 fs = require 'fs'
 
@@ -134,6 +134,13 @@ describe 'Parser', () ->
       expect(func['params'][0]['a']).to.equal(1)
       expect(func['params'][1][0]['name']).to.equal('b')
 
+  describe '#string()', ->
+    it "gathers characters of a string", ->
+      @parser.text = '"this is a test"]'
+      @parser.reset()
+      string = @parser.string()
+      expect(string).to.equal('"this is a test"')
+
   describe '#atom()', ->
     it "gathers characters of an atom followed by a ','", ->
       @parser.text = ':def ,\n'
@@ -146,6 +153,12 @@ describe 'Parser', () ->
       @parser.reset()
       atom = @parser.atom()
       expect(atom).to.equal('Math')
+
+    it "recognizes '.' operator", ->
+      @parser.text = ':.,'
+      @parser.reset()
+      atom = @parser.atom()
+      expect(atom).to.equal('.')
 
   describe '#parameterName()', ->
     it 'gathers characters of a parameter', ->
@@ -168,12 +181,12 @@ describe 'Parser', () ->
       parameter = @parser.parameter()
       expect(Object.keys(parameter)[0]).to.equal('do')
       expect(parameter.do.name).to.equal('__block__')
-      expect(parameter.do.params[0]).to.be.a('object')
+      expect(parameter.do.params[0]).to.be.a('array')
       expect(parameter.do.params[1]).to.be.a('array')
       expect(parameter.do.block).to.be.a('array')
       expect(parameter.do.params[1][0].name).to.equal('def')
       expect(parameter.do.block[0].name).to.equal('def')
-      expect(parameter.do.block[0].params[0]).to.be.a('object')
+      expect(parameter.do.block[0].params[0]).to.be.a('array')
       expect(parameter.do.block).to.be.a('array')
 
   describe '#number()', ->

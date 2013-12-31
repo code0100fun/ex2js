@@ -1,5 +1,5 @@
-FunctionExpression = require('./function_expression')
-ReturnStatement = require('./return_statement')
+FunctionExpression = require('../expressions/function_expression')
+ReturnStatement = require('../statements/return_statement')
 
 class Module
   constructor: (@name) ->

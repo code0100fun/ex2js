@@ -1,21 +1,13 @@
-class MemberExpression
+Expression = require './expression'
+
+class MemberExpression extends Expression
   constructor: (@obj, @property) ->
-    console.log 'member constructor'
+    super()
   type: 'MemberExpression'
-  objAst: ->
-    if typeof(@obj) == 'object'
-      @obj.ast()
-    else
-      new Identifier(@obj).ast()
-  propertyAst: ->
-    if typeof(@property) == 'object'
-      @property.ast()
-    else
-      new Identifier(@property).ast()
   ast: ->
     type: @type
     computed: false
-    object: @objAst()
-    property: @propertyAst()
+    object: @astOrIdentifier @obj
+    property: @astOrIdentifier @property
 
 module.exports = MemberExpression

@@ -12,14 +12,10 @@ class FunctionExpression extends Expression
         statement = new ReturnStatement(statement.expression)
       statmentsAst.push statement.ast()
     statmentsAst
-  paramsAst: ->
-    @params.map (param) ->
-      type: 'Identifier'
-      name: param
   ast: ->
     type: 'FunctionExpression'
     id: null
-    params: @paramsAst()
+    params: @astOrIdentifier @params
     defaults: []
     body:
       type: 'BlockStatement'

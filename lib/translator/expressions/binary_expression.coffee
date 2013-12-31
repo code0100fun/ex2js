@@ -2,16 +2,12 @@ Expression = require './expression.coffee'
 
 class BinaryExpression extends Expression
   constructor: (@operator, @left, @right) ->
+    super()
   type: 'BinaryExpression'
-  # TODO - handle expressions in left and right
   ast: ->
     type: @type
     operator: @operator
-    left:
-      type: 'Identifier'
-      name: @left
-    right:
-      type: 'Identifier'
-      name: @right
+    left: @astOrIdentifier @left
+    right: @astOrIdentifier @right
 
 module.exports = BinaryExpression

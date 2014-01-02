@@ -10,7 +10,7 @@ Identifier = require './types/identifier'
 Literal = require './types/literal'
 
 class Translator
-
+  constructor: ->
   parse: (source) ->
     parser = new Parser()
     parser.parse(source)
@@ -61,7 +61,7 @@ class Translator
 
   assignment: (exAst) ->
     operator = exAst.name
-    left = exAst.params[1][0].name
+    left = @expression exAst.params[1][0]
     right = @expression exAst.params[1][1]
     new AssignmentExpression(operator, left, right)
 
@@ -93,7 +93,6 @@ class Translator
       when '__aliases__' then @aliases(exAst)
       else
         if typeof(exAst.name) == 'object'
-          console.log '%j', exAst.params[1]
           args = exAst.params[1]
           args = args.map (a) => @expression(a)
           new CallExpression(@expression(exAst.name), args)

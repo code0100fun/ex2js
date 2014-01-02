@@ -1,4 +1,4 @@
-require("coffee-script")
+require('coffee-script')
 cli = require('commander')
 fs = require('fs')
 exec = require('child_process').exec

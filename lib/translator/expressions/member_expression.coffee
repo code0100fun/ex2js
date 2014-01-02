@@ -1,13 +1,14 @@
-Expression = require './expression'
+_ = require 'underscore'
+AstBuilder = require '../ast_builder'
 
-class MemberExpression extends Expression
+class MemberExpression
   constructor: (@obj, @property) ->
-    super()
-  type: 'MemberExpression'
   ast: ->
-    type: @type
+    type: @type()
     computed: false
     object: @astOrIdentifier @obj
     property: @astOrIdentifier @property
+
+_.extend MemberExpression::, AstBuilder::
 
 module.exports = MemberExpression

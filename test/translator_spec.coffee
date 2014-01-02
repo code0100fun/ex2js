@@ -75,7 +75,7 @@ describe 'Translator', () ->
     it 'constructs an assignment expression statemnt given the AST for an assignment', ->
       assign = @translator.statement assignAst
       expect(assign.expression.operator).to.equal('=')
-      expect(assign.expression.left).to.equal('ret')
+      expect(assign.expression.left.name).to.equal('ret')
       expect(assign.expression.right).to.exist
       expect(assign.expression.right.operator).to.equal('+')
 
@@ -98,11 +98,12 @@ describe 'Translator', () ->
       expect(exp.type).to.equal('MemberExpression')
       expect(exp.object.name).to.equal('person')
 
-    # it 'constructs an assignment to a member expression', ->
-    #   member = @translator.statement(memberAssignAst).ast()
-    #   exp = member.expression
-    #   expect(exp.type).to.equal('AssignmentExpression')
-    #   expect(exp.object.name).to.equal('person')
+    it 'constructs an assignment to a member expression', ->
+      member = @translator.statement(memberAssignAst).ast()
+      exp = member.expression
+      expect(exp.type).to.equal('AssignmentExpression')
+      expect(exp.left.object.name).to.equal('person')
+      expect(exp.left.property.name).to.equal('name')
 
   describe '#method(exAst)', ->
     it 'constructs a method given the AST for a method', ->

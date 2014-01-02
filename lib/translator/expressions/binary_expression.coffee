@@ -1,13 +1,14 @@
-Expression = require './expression.coffee'
+_ = require 'underscore'
+AstBuilder = require '../ast_builder'
 
-class BinaryExpression extends Expression
+class BinaryExpression
   constructor: (@operator, @left, @right) ->
-    super()
-  type: 'BinaryExpression'
   ast: ->
-    type: @type
+    type: @type()
     operator: @operator
     left: @astOrIdentifier @left
     right: @astOrIdentifier @right
+
+_.extend BinaryExpression::, AstBuilder::
 
 module.exports = BinaryExpression

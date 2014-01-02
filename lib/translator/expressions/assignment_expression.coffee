@@ -1,13 +1,14 @@
-Expression = require './expression.coffee'
+_ = require 'underscore'
+AstBuilder = require '../ast_builder'
 
-class AssignmentExpression extends Expression
+class AssignmentExpression
   constructor: (@operator, @left, @right) ->
-    super()
-  type: 'AssignmentExpression'
   ast: ->
-    type: @type
+    type: @type()
     operator: @operator
     left: @astOrIdentifier @left
     right: @astOrIdentifier @right
+
+_.extend AssignmentExpression::, AstBuilder::
 
 module.exports = AssignmentExpression

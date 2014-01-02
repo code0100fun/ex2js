@@ -1,9 +1,12 @@
+_ = require 'underscore'
+AstBuilder = require '../ast_builder'
+
 class ExpressionStatement
   constructor: (@expression) ->
-  expressionAst: ->
-    @expression.ast()
   ast: ->
-      type: 'ExpressionStatement'
-      expression: @expressionAst()
+    type: @type()
+    expression: @astOrIdentifier @expression
+
+_.extend ExpressionStatement::, AstBuilder::
 
 module.exports = ExpressionStatement

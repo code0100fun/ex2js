@@ -1,6 +1,6 @@
 #! /usr/bin/env coffee
 
-require("coffee-script")
+require('coffee-script')
 cli = require('commander')
 pack = require('../package.json')
 fs = require('fs')

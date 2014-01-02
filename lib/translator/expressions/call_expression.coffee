@@ -1,13 +1,14 @@
+_ = require 'underscore'
 Identifier = require '../types/identifier'
-Expression = require './expression.coffee'
+AstBuilder = require '../ast_builder'
 
-class CallExpression extends Expression
+class CallExpression
   constructor: (@callee, @args) ->
-    super()
-  type: 'CallExpression'
   ast: ->
-    type: @type
+    type: @type()
     callee: @astOrIdentifier @callee
     arguments: @astOrIdentifier @args
+
+_.extend CallExpression::, AstBuilder::
 
 module.exports = CallExpression

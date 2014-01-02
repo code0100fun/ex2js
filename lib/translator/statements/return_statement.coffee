@@ -1,13 +1,12 @@
+_ = require 'underscore'
+AstBuilder = require '../ast_builder'
+
 class ReturnStatement
   constructor: (@argument) ->
-  type: 'ReturnStatement'
-  argumentAst: ->
-    if @argument.ast
-      @argument.ast()
-    else
-      { type: 'Identifier', name: @argument }
   ast: ->
-    type: @type
-    argument: @argumentAst()
+    type: @type()
+    argument: @astOrIdentifier @argument
+
+_.extend ReturnStatement::, AstBuilder::
 
 module.exports = ReturnStatement

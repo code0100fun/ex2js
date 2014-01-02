@@ -6,7 +6,7 @@ class Method
   body: undefined
   functionAst: ->
     func = new FunctionExpression(@params)
-    func.body = @body
+    func.addStatement(s) for s in @body
     func.ast()
   ast: ->
     type: 'ExpressionStatement'

@@ -9,7 +9,7 @@ fs = require 'fs'
 describe 'FunctionExpression', () ->
   beforeEach ->
     @func = new FunctionExpression(['a', 'b'])
-    @func.body.push new ExpressionStatement(new BinaryExpression('+', 'a', 'b'))
+    @func.addStatement new ExpressionStatement(new BinaryExpression('+', 'a', 'b'))
     @ast = @func.ast()
 
   describe '#constructor(name)', ->

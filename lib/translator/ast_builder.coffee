@@ -14,7 +14,9 @@ class AstBuilder
   buildAst: (props...) ->
     ast = type: @type()
     for prop in props
-      ast[prop] = @astOrIdentifier @[prop]
+      value = @[prop]
+      value = value.call(@) if typeof(value) == 'function'
+      ast[prop] = @astOrIdentifier value
     ast
 
 

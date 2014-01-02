@@ -1,29 +1,14 @@
 _ = require 'underscore'
-ReturnStatement = require '../statements/return_statement'
+BlockStatement = require '../statements/block_statement'
 AstBuilder = require '../ast_builder'
 
 class FunctionExpression
   constructor: (@params) ->
-    @body = []
-  body: undefined
-  bodyAst: ->
-    statmentsAst = []
-    for statement, i in @body
-      if i == (@body.length - 1) && statement.type() != 'ReturnStatement'
-        statement = new ReturnStatement(statement.expression)
-      statmentsAst.push statement.ast()
-    statmentsAst
+    @body = new BlockStatement()
+  addStatement: (statement) ->
+    @body.addStatement statement
   ast: ->
-    type: @type()
-    id: null
-    params: @astOrIdentifier @params
-    defaults: []
-    body:
-      type: 'BlockStatement'
-      rest: null
-      generator: false
-      expression: false
-      body: @bodyAst()
+    _.extend id:null, defaults:[], @buildAst('params', 'body')
 
 _.extend FunctionExpression::, AstBuilder::
 

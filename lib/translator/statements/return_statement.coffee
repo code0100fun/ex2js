@@ -4,8 +4,7 @@ AstBuilder = require '../ast_builder'
 class ReturnStatement
   constructor: (@argument) ->
   ast: ->
-    type: @type()
-    argument: @astOrIdentifier @argument
+    @buildAst 'argument'
 
 _.extend ReturnStatement::, AstBuilder::
 

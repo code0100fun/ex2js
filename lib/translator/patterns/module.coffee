@@ -9,8 +9,8 @@ class Module
   functionAst: ->
     func = new FunctionExpression([@exports])
     for method in @methods
-      func.body.push method
-    func.body.push(new ReturnStatement(@exports))
+      func.addStatement method
+    func.addStatement new ReturnStatement(@exports)
     func.ast()
   ast: ->
     type: 'VariableDeclaration'

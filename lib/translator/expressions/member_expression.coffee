@@ -2,12 +2,9 @@ _ = require 'underscore'
 AstBuilder = require '../ast_builder'
 
 class MemberExpression
-  constructor: (@obj, @property) ->
+  constructor: (@object, @property) ->
   ast: ->
-    type: @type()
-    computed: false
-    object: @astOrIdentifier @obj
-    property: @astOrIdentifier @property
+    _.extend computed: false, @buildAst('object', 'property')
 
 _.extend MemberExpression::, AstBuilder::
 

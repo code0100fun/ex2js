@@ -3,11 +3,9 @@ Identifier = require '../types/identifier'
 AstBuilder = require '../ast_builder'
 
 class CallExpression
-  constructor: (@callee, @args) ->
+  constructor: (@callee, @arguments) ->
   ast: ->
-    type: @type()
-    callee: @astOrIdentifier @callee
-    arguments: @astOrIdentifier @args
+    @buildAst('callee', 'arguments')
 
 _.extend CallExpression::, AstBuilder::
 

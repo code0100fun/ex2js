@@ -4,8 +4,7 @@ AstBuilder = require '../ast_builder'
 class ExpressionStatement
   constructor: (@expression) ->
   ast: ->
-    type: @type()
-    expression: @astOrIdentifier @expression
+    @buildAst 'expression'
 
 _.extend ExpressionStatement::, AstBuilder::
 

@@ -81,8 +81,8 @@ describe 'Translator', () ->
 
     it 'constructs a string literal', ->
       call = @translator.statement(callAst)
-      expect(call.expression.args[0].value).to.equal('Hello World')
-      expect(call.expression.args[0].raw).to.equal('"Hello World"')
+      expect(call.expression.arguments[0].value).to.equal('Hello World')
+      expect(call.expression.arguments[0].raw).to.equal('"Hello World"')
       expect(call.ast().expression.arguments[0].value).to.equal('Hello World')
       expect(call.ast().expression.arguments[0].raw).to.equal('"Hello World"')
 
